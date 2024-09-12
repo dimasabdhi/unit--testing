@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!--load the qunit.js-->
+    <link rel="stylesheet" href="qunit.css" />
+
+    <!--load the qunit.js-->
+    <script src="qunit.js"></script>
+
+    <!--load the script.js-->
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>Unit test dengan qunit</h1>
+
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+
+    <script>
+      QUnit.module("Aritmatika", function () {
+        QUnit.test("Penjumlahan", function (assert) {
+          assert.equal(add(1, 1), 2, "1 + 1 hasilnya 2");
+          assert.equal(add(-1, 1), -0, "-1 + 1 hasilnya 1");
+        });
+        QUnit.test("Pengurangan", function (assert) {
+          assert.equal(subtract(6, 3), 3, "6 - 3 hasilnya 3");
+          assert.equal(subtract(-6, 3), -9, "-6 - 3 hasilnya 1");
+        });
+        QUnit.test("Perkalian", function (assert) {
+          assert.equal(multiply(2, 2), 4, "2 * 2 hasilnya 2");
+          assert.equal(multiply(-2, 3), -6, "-2 * 3 hasilnya 1");
+        });
+        QUnit.test("Pembagian", function (assert) {
+          assert.equal(divide(6, 3), 2, "6 / 3 hasilnya 1");
+          assert.equal(divide(-6, 3), -2, "-6 / 3 hasilnya 1");
+        });
+      });
+
+      QUnit.module("API", function () {
+        QUnit.test("Mengambil Data di API", function (assert) {
+          var done = assert.async();
+          getAPI(
+            "https://jsonplaceholder.typicode.com/posts/1",
+            function (data) {
+              assert.equal(data.userId, 1, "User ID harus 1");
+              assert.equal(
+                data.title,
+                "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                "Title harus sesuai"
+              );
+              done();
+            }
+          );
+        });
+      });
+
+      QUnit.module("Function", function () {
+        QUnit.test("Check Function Nama", function (assert) {
+          assert.equal(isNameValid(""), false, "Nama tidak boleh kosong");
+          assert.equal(isNameValid("Dimas"), true, "Nama saya dimas");
+        });
+      });
+
+      QUnit.module("DOM", function () {
+        QUnit.test("Tambah element di DIV", function (assert) {
+          var done = assert.async();
+          var element = document.createElement("div");
+          element.id = "test";
+          document.body.appendChild(element);
+
+          assert.ok(
+            document.getElementById("test"),
+            "Element berhasil ditambahkan"
+          );
+          done();
+        });
+      });
+    </script>
+  </body>
+</html>
